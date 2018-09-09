@@ -2,26 +2,20 @@
 #define STATISTICSVIEW_H
 
 #include <QObject>
-#include <filestatisticsmodel.h>
-#include <QLabel>
+#include <QTextBrowser>
 #include <QTableView>
 
 class FileStatisticsViewContainer : public QObject
 {
     Q_OBJECT
 
-    QLabel *fileCount;
-    QLabel *allSize;
-    QTableView *avgSizePerExt;
-
+    QTextBrowser *view;
 public:
     FileStatisticsViewContainer();
-    void setFileCountView(QLabel* label);
-    void setAllSizeView(QLabel* label);
-    void setAvgSizeView(QTableView *table);
+    void setView(QTextBrowser* label);
 
 public slots:
-    void updateView(const FileStatisticsModel& model);
+    void updateView(const QString& statistics);
 };
 
 #endif // STATISTICSVIEW_H

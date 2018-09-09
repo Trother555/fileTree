@@ -5,23 +5,13 @@ FileStatisticsViewContainer::FileStatisticsViewContainer()
 
 }
 
-void FileStatisticsViewContainer::setFileCountView(QLabel *l)
+void FileStatisticsViewContainer::setView(QTextBrowser *l)
 {
-    fileCount = l;
+    view = l;
 }
 
-void FileStatisticsViewContainer::setAllSizeView(QLabel *l)
-{
-    allSize = l;
-}
 
-void FileStatisticsViewContainer::setAvgSizeView(QTableView *t)
+void FileStatisticsViewContainer::updateView(const QString& statistics)
 {
-    avgSizePerExt = t;
-}
-
-void FileStatisticsViewContainer::updateView(const FileStatisticsModel& model)
-{
-    fileCount->setText(QString(model.getFilesCount()));
-    allSize->setText(QString::number(model.getAllSize()));
+    view->setText(statistics);
 }

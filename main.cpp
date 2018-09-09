@@ -6,6 +6,7 @@
 #include "filestatisticscontroller.h"
 #include "filestatisticsviewcontainer.h"
 #include <QModelIndex>
+#include <QTextBrowser>
 
 int main(int argc, char *argv[])
 {
@@ -13,34 +14,31 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
+    QString root = "";
+    //"C:/Users/Pavel/Desktop/asd"
     //set up the fileTree with a model
     QFileSystemModel fsModel;
-    fsModel.setRootPath("C:/Users/Pavel/Desktop/asd");
+    fsModel.setRootPath(root);
     auto fileTree = w.findChild<QTreeView*>("fileTree");
     fileTree->setModel(&fsModel);
     fileTree->setAnimated(false);
     fileTree->setIndentation(20);
     fileTree->setSortingEnabled(true);
     const QModelIndex rootIndex = fsModel.
-            index(QDir::cleanPath("C:/Users/Pavel/Desktop/asd"));
+            index(QDir::cleanPath(root));
     fileTree->setRootIndex(rootIndex);
 
     //set up slots for statistics controller
     FileStatisticsController controller(&a);
 
-    //set up the statistics constorrelr with model
-    FileStatisticsModel statisticsModel;
-    controller.setModel(&statisticsModel);
-
     //set up the statistics view
     FileStatisticsViewContainer statisticsView;
-    statisticsView.setFileCountView(w.findChild<QLabel*>("fileCount"));
-    statisticsView.setAllSizeView(w.findChild<QLabel*>("allSize"));
+    statisticsView.setView(w.findChild<QTextBrowser*>("statisticsView"));
 
     //connecting signals to slots
-    QObject::connect(fileTree, &QTreeView::activated,
+    QObject::connect(fileTree, &QTreeView::pressed,
                      &controller, &FileStatisticsController::updateStatistics);
-    QObject::connect(&statisticsModel, &FileStatisticsModel::modelChanged,
+    QObject::connect(&controller, &FileStatisticsController::updated,
                      &statisticsView, &FileStatisticsViewContainer::updateView);
 
     return a.exec();

@@ -15,18 +15,16 @@ double FileStatisticsModel::getAllSize() const
     return allSize;
 }
 
-void FileStatisticsModel::setModel(const FileStatisticsModel &newModel)
+QString FileStatisticsModel::toString()
 {
-    filesCount = newModel.getFilesCount();
-    allSize = newModel.getAllSize();
-    emit modelChanged(*this);
-}
-
-void FileStatisticsModel::clean()
-{
-    filesCount = 0;
-    allSize = 0;
-    avgSizePerExt.clear();
+    QString result;
+    result += QString::number(filesCount);
+    result += QString::number(allSize);
+    for(auto it : avgSizePerExt)
+    {
+        //TODO
+    }
+    return result;
 }
 
 void FileStatisticsModel::updateModel(QFileInfo file)
@@ -52,5 +50,4 @@ void FileStatisticsModel::updateModel(QFileInfo file)
     {
         avgSizePerExt.insert(extension, SumAndCount(size, 1));
     }
-    emit modelChanged(*this);
 }

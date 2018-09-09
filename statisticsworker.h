@@ -9,7 +9,7 @@ class StatisticsWorker : public QThread
 {
     Q_OBJECT
 
-    FileStatisticsModel model;
+    QString statistics;
     QString path;
     void run() override;
 
@@ -18,7 +18,7 @@ public:
     void setPath(const QString&path);
 
 signals:
-    void ready(const FileStatisticsModel&result);
+    void ready(const QString& statistics);
 };
 
 #endif // STATISTICSWORKER_H

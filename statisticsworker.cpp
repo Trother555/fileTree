@@ -15,13 +15,14 @@ void StatisticsWorker::setPath(const QString &p)
 
 void StatisticsWorker::run()
 {
-    model.clean();
-    QDirIterator it(path, QStringList() << "*",
+    QDirIterator it("C:/Users/Pavel/Desktop/asd/"+path, QStringList() << "*",
                     QDir::Files,QDirIterator::Subdirectories);
+    FileStatisticsModel model;
     while (it.hasNext())
     {
         model.updateModel(it.fileInfo());
         it.next();
     }
-    emit ready(model);
+    statistics = model.toString();
+    emit ready(statistics);
 }

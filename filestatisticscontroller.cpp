@@ -1,23 +1,19 @@
 #include "filestatisticscontroller.h"
 #include <QDebug>
 #include <QModelIndex>
-
+#include <QFileSystemModel>
 FileStatisticsController::FileStatisticsController(QObject *parent) : QObject(parent)
 {
-
-}
-
-void FileStatisticsController::setModel(FileStatisticsModel *m)
-{
-    model = m;
     QObject::connect(&worker, &StatisticsWorker::ready,
-                     m, &FileStatisticsModel::setModel);
+                     this, &FileStatisticsController::updated);
 }
 
-void FileStatisticsController::updateStatistics(const QModelIndex& path)
+void FileStatisticsController::updateStatistics(const QModelIndex& index)
 {
-    QString s = path.data().toString();
-    if(worker.isRunning())
+    QFileSystemModel* model = (QFileSystemModel*)index.model();
+    QString path = model->filePath(index);
+    qDebug()<<path;
+    /*if(worker.isRunning())
     {
         worker.terminate();
         qDebug()<<"Terminating worker...";
@@ -25,7 +21,7 @@ void FileStatisticsController::updateStatistics(const QModelIndex& path)
         qDebug()<<"Worker has been terminated";
     }
     worker.setPath(s);
-    worker.start();
+    worker.start();*/
 }
 
 FileStatisticsController::~FileStatisticsController()

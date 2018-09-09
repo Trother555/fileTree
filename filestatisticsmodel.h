@@ -12,24 +12,17 @@ class FileStatisticsModel : public QObject
 {
     Q_OBJECT
 
-    uint32_t filesCount;
-    double allSize;
+    uint32_t filesCount = 0;
+    double allSize = 0;
     QMap<QString, SumAndCount> avgSizePerExt;
 
 public:
     FileStatisticsModel();
-
     void updateModel(QFileInfo file);
-
     uint32_t getFilesCount() const;
     double getAllSize() const;
     void clean();
-
-signals:
-    void modelChanged(const FileStatisticsModel& newModel);
-public slots:
-    void setModel(const FileStatisticsModel& newModel);
-
+    QString toString();
 };
 
 #endif // STATISTICSMODEL_H

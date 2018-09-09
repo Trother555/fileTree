@@ -3,22 +3,20 @@
 
 #include <QObject>
 #include "statisticsworker.h"
-#include "filestatisticsmodel.h"
 
 class FileStatisticsController : public QObject
 {
     Q_OBJECT
 
     StatisticsWorker worker;
-    FileStatisticsModel *model;
 
 public:
     explicit FileStatisticsController(QObject *parent = nullptr);
-    void setModel(FileStatisticsModel *model);
     ~FileStatisticsController();
-
+signals:
+    void updated(const QString& statistics);
 public slots:
-    void updateStatistics(const QModelIndex& path);
+    void updateStatistics(const QModelIndex& index);
 };
 
 #endif // STATISTICSCONTROLLER_H
