@@ -13,15 +13,15 @@ void FileStatisticsController::updateStatistics(const QModelIndex& index)
     QFileSystemModel* model = (QFileSystemModel*)index.model();
     QString path = model->filePath(index);
     qDebug()<<path;
-    /*if(worker.isRunning())
+    if(worker.isRunning())
     {
-        worker.terminate();
-        qDebug()<<"Terminating worker...";
+        qDebug()<<"Stopping the worker...";
+        worker.stop();
         worker.wait();
-        qDebug()<<"Worker has been terminated";
     }
-    worker.setPath(s);
-    worker.start();*/
+    worker.setPath(path);
+    qDebug()<<"Starting the worker...";
+    worker.start();
 }
 
 FileStatisticsController::~FileStatisticsController()

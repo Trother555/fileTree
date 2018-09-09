@@ -1,8 +1,8 @@
 #include "filestatisticsmodel.h"
 
-FileStatisticsModel::FileStatisticsModel()
+FileStatisticsModel::FileStatisticsModel(const QString &p)
 {
-
+    path = p;
 }
 
 uint32_t FileStatisticsModel::getFilesCount() const
@@ -18,11 +18,12 @@ double FileStatisticsModel::getAllSize() const
 QString FileStatisticsModel::toString()
 {
     QString result;
-    result += QString::number(filesCount);
-    result += QString::number(allSize);
-    for(auto it : avgSizePerExt)
+    result += path;
+    result += ":\nFiles count: " + QString::number(filesCount);
+    result += "\nAll size: " + QString::number(allSize/1024/1024) + " Mb\nAvg size per extension:\n";
+    for(auto it : avgSizePerExt.keys())
     {
-        //TODO
+        result += it + " : " + QString::number(avgSizePerExt.value(it).first/1024) + " Kb\n";
     }
     return result;
 }
@@ -34,7 +35,7 @@ void FileStatisticsModel::updateModel(QFileInfo file)
     auto size = file.size();
     //update files size
     allSize += size;
-    auto extension = file.completeSuffix();
+    auto extension = file.suffix().toLower();
     //update avarage by extension
     if(avgSizePerExt.contains(extension))
     {

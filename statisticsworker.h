@@ -9,6 +9,7 @@ class StatisticsWorker : public QThread
 {
     Q_OBJECT
 
+    bool stopped = false;
     QString statistics;
     QString path;
     void run() override;
@@ -16,6 +17,7 @@ class StatisticsWorker : public QThread
 public:
     StatisticsWorker();
     void setPath(const QString&path);
+    void stop();
 
 signals:
     void ready(const QString& statistics);
