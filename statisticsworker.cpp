@@ -3,6 +3,7 @@
 #include <QDir>
 #include <memory>
 #include <QElapsedTimer>
+#include <QDebug>
 
 StatisticsWorker::StatisticsWorker()
 {
@@ -22,7 +23,8 @@ void StatisticsWorker::stop()
 void StatisticsWorker::run()
 {
     stopped = false;
-    QDirIterator it(path, QStringList() << "*",
+    QDir dir(path);
+    QDirIterator it(dir, QStringList() << "*",
                     QDir::Files,QDirIterator::Subdirectories);
     FileStatisticsModel model(path);
     QElapsedTimer timer;
@@ -41,7 +43,7 @@ void StatisticsWorker::run()
             emit ready(statistics);
         }
     }
-    if(sopped)
+    if(stopped)
     {
         qDebug()<<"Worker interrupted";
     }
