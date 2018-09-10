@@ -15,11 +15,13 @@ class FileStatisticsModel : public QObject
     QString path;
     uint32_t filesCount = 0;
     double allSize = 0;
+    uint32_t subdirs = 0;
     QMap<QString, SumAndCount> avgSizePerExt;
 
 public:
     FileStatisticsModel(const QString &path);
     void updateModel(QFileInfo file);
+    void setSubdirsCount(uint32_t count);
     uint32_t getFilesCount() const;
     double getAllSize() const;
     void clean();

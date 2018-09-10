@@ -19,13 +19,19 @@ QString FileStatisticsModel::toString()
 {
     QString result;
     result += path;
-    result += ":\nFiles count: " + QString::number(filesCount);
+    result += ":\nSub directories count: " + QString::number(subdirs);
+    result += "\nFiles count: " + QString::number(filesCount);
     result += "\nAll size: " + QString::number(allSize/1024/1024) + " Mb\nAvg size per extension:\n";
     for(auto it : avgSizePerExt.keys())
     {
         result += it + " : " + QString::number(avgSizePerExt.value(it).first/1024) + " Kb\n";
     }
     return result;
+}
+
+void FileStatisticsModel::setSubdirsCount(uint32_t count)
+{
+    subdirs= count;
 }
 
 void FileStatisticsModel::updateModel(QFileInfo file)

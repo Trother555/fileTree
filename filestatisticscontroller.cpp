@@ -10,7 +10,7 @@ FileStatisticsController::FileStatisticsController(QObject *parent) : QObject(pa
 
 void FileStatisticsController::updateStatistics(const QModelIndex& index)
 {
-    QFileSystemModel* model = (QFileSystemModel*)index.model();
+    const QFileSystemModel* model = dynamic_cast<const QFileSystemModel*>(index.model());
     QString path = model->filePath(index);
     qDebug()<<path;
     if(worker.isRunning())

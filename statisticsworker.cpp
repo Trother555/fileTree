@@ -24,9 +24,11 @@ void StatisticsWorker::run()
 {
     stopped = false;
     QDir dir(path);
-    QDirIterator it(dir, QStringList() << "*",
+    auto subdirsCount = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot).count();
+    QDirIterator it(path, QStringList() << "*",
                     QDir::Files,QDirIterator::Subdirectories);
     FileStatisticsModel model(path);
+    model.setSubdirsCount(subdirsCount);
     QElapsedTimer timer;
     timer.start();
     statistics = "In process\n" + model.toString();
