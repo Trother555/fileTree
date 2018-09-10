@@ -21,7 +21,9 @@ QString FileStatisticsModel::toString()
     result += path;
     result += ":\nSub directories count: " + QString::number(subdirs);
     result += "\nFiles count: " + QString::number(filesCount);
-    result += "\nAll size: " + QString::number(allSize/1024/1024) + " Mb\nAvg size per extension:\n";
+    result += "\nAll size: " + QString::number(allSize/1024/1024)
+            + " Mb\nAvg size: " + QString::number(allSize/filesCount/1024/1024)
+            + " Mb\nAvg size per extension:\n";
     for(auto it : avgSizePerExt.keys())
     {
         result += it + " : " + QString::number(avgSizePerExt.value(it).first/1024) + " Kb\n";
